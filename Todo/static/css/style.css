@@ -1,0 +1,19 @@
+/* 
+.container{
+    margin: 0;
+    height: 100%;
+    max-width: 100%;
+}
+.register table{
+    border-radius: 5px;
+    background-color: rgb(193, 222, 216);
+} */
+
+.anchor{
+    text-decoration: none;
+}
+
+
+.filterbydate{
+    flex: auto;
+}

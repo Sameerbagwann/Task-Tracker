@@ -1,0 +1,171 @@
+{% include 'todoapp/header.html' %}
+{% block 'main' %} 
+{% load static %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="text-bg-white p-1 mt-4 text-center">Task Planner</h1>
+    </div> <!--heading end-->
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h3 class="text-bg-danger p-2 text-center mt-4 ">Add Task </h3>
+        <form method="POST" action="" >
+            {% csrf_token %}
+            <div class="mb-3">
+                <label  for="first" class="form-label"> <strong>Task Name</strong> </label>
+                <input name="name" type="text" class="form-control" id="first" placeholder="Enter Task Name">
+            </div><!--Task Name-->
+
+            <div class="mb-3">
+                <label for="second" class="form-label"> <strong>Task details</strong> </label>
+                <textarea name="tdetail" class="form-control" id="second" rows="3"></textarea>
+            </div><!--Task Details-->
+            
+            <div class="mb-3">
+                <select class="form-select" name="cat" aria-label="Default select example">
+                    <option >Select Category</option>
+                    <option value="1">Office</option>
+                    <option value="2">Personal</option>
+                </select>
+            </div><!--Category-->
+
+            <div class="mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="0" name="status" id="ongoing">
+                    <label class="form-check-label" for="ongoing">
+                      Ongoing
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" value="1" name="status" id="completed" >
+                    <label class="form-check-label" for="completed">
+                        Completed
+                    </label>
+                  </div>
+            </div>
+
+            <div class="mb-3">
+                <label  for="fifth" class="form-label"> <strong>Due Date:</strong> </label>
+                <input name="duedate" type="date" class="form-control" id="fifth" placeholder="Enter Task Name">
+            </div><!--Task Name-->
+
+            <div class="mb-3">
+                <input type="submit" value="Create Task" class="btn btn-danger" >
+            </div>
+        </form>
+    </div><!--from end-->
+
+
+    <div class="col-md-8">
+        <h3 class="text-bg-primary p-2 text-center mt-4 ">Task List</h3>
+        <table class="table table-bordered ">
+            <tr>
+                <th>Sr.No</th>
+                <th>Task Name</th>
+                <th>Task Details</th>
+                
+                <th>Category</th>
+
+                <th>Status</th>
+                <th>End Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+
+                
+            </tr>
+            {% for x in data %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{x.name}}</td>
+                    <td>{{x.detail}}</td>
+
+                    {% if x.cat == '1' %}
+                    <td>Office</td>
+                    {% else %}
+                    <td>Personal</td>
+                    {% endif %}
+
+                    {% if x.status == 0 %}
+                    <td>Ongoing</td>
+                    {% else %}
+                    <td>Completed</td>
+                    {% endif %}
+
+                    <td>{{x.enddate}}</td>
+                    <td><a href="/edit/{{x.id}}"><button class="btn btn-warning">Edit</button></a></td>                
+                    <td><a href="/delete/{{x.id}}"><button class="btn btn-danger">Delete</button></a></td>                
+                </tr>
+                
+            {% endfor %}
+
+        </table>
+        <!--pagination start -->
+        <ul class="pagination justify-content-center">
+            <li class="page-item ">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        
+        <!-- pagination ends here  -->
+
+    </div><!--table end-->
+</div>
+
+<hr>
+<div class="row my-3">
+    <div class="col-md-4">
+        <strong>By Category</strong>
+
+                <p><a class="anchor" href="dashboard">All</a></p>
+                <p><a class="anchor" href="/catfilter/1">Office</a></p>
+                <p><a class="anchor" href="/catfilter/2">Personal</a></p>
+            </div>
+            <div class="col-md-4">
+                <strong>By Status</strong>
+                <p><a class="anchor" href="/statfilter/0">Pending</a></p>
+                <p><a class="anchor" href="/statfilter/1">Completed</a></p>
+                <strong>By Date</strong>
+                <p><a class="anchor" href="/datesort/0">Newest</a></p>
+                <p><a class="anchor" href="/datesort/1">Oldest</a></p>
+            </div>
+    <div class="col-md-4">
+        <strong>Between Date</strong>
+        <form action="/datefilter" method="GET">
+            <div class="mb-3 mt-3">
+                <label  for="from" class="form-label filterbydate"> <strong>From:</strong> </label>
+                <input name="from" type="date" class="form-control" id="from" placeholder="mm-dd-yyyy" aria-colspan="from">
+            </div><!--To from -->
+
+            <div class="mb-3">
+                <label  for="to" class="form-label filterbydate"> <strong>To:</strong> </label>
+                <input name="to" type="date" class="form-control" id="to" placeholder="mm-dd-yyyy">
+            </div>
+
+
+
+    
+
+
+            
+            <div class="mb-3">
+                <input type="submit" value="Enter" class="btn btn-danger" >
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock 'main' %}
+{% include 'todoapp/footer.html' %}

@@ -1,0 +1,11 @@
+1) CURD operations
+2) Filters and Sorting
+3) Authentication 
+   a) Register
+   b) Login 
+   c) Gmail Verification
+   d) Forgot Password 
+   e) Session Based Authentication 
+
+5) Server Deployment 
+6) Payment gateway Integration

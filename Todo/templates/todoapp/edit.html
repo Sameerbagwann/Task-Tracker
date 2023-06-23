@@ -1,0 +1,84 @@
+{% include 'todoapp/header.html' %}
+{% block 'main' %}
+<!-- {% load static %} -->
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="text-bg-primary p-1 mt-4 text-center">Task Planner</h1>
+    </div> <!--heading end-->
+</div>
+
+<div class="row">
+    <div class="col-md-5 mx-auto">
+        <h3 class="text-bg-danger p-2 text-center mt-4 ">Update Task </h3>
+        {% for x in data %}
+            <form method="POST" action="" >
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label  for="first" class="form-label"> <strong>Update Task Name</strong> </label>
+                    <input name="name" value="{{x.name}}" type="text" class="form-control" id="first" placeholder="Enter Task Name">
+                </div><!--Task Name-->
+
+                <div class="mb-3">
+                    <label for="second" class="form-label"> <strong>Update Task details</strong> </label>
+                    <textarea name="tdetail" class="form-control" id="second" rows="3">{{x.detail}}</textarea>
+                </div><!--Task Details-->
+                <div class="mb-3">
+                    <select class="form-select" name="cat" aria-label="Default select example">
+                        {% if x.cat == '1' %}   
+                        <option value="{{x.cat}}">Office</option>
+                        {% else %}
+                        <option value="{{x.cat}}">Personal</option>
+                        {% endif %}
+                        <option value="1">Office</option>
+                        <option value="2">Personal</option>
+
+                    </select>
+                </div><!--Category-->
+
+                {% if x.status == 0 %}
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="0" name="status" id="ongoing" checked>
+                        <label class="form-check-label" for="ongoing">
+                        Ongoing
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="status" id="completed" >
+                        <label class="form-check-label" for="completed">
+                            Completed
+                        </label>
+                    </div>
+                </div>
+                {% else %}
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="0" name="status" id="ongoing">
+                        <label class="form-check-label" for="ongoing">
+                        Ongoing
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="1" name="status" id="completed">
+                        <label class="form-check-label" for="completed">
+                            Completed
+                        </label>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <label  for="fifth" class="form-label"> <strong>Update Due Date:</strong> </label>&nbsp;&nbsp;{{x.enddate}}
+                    <input name="duedate" type="date" class="form-control"  id="fifth" placeholder="Enter Task Name">
+                </div><!--Task Name-->
+
+                <div class="mb-3">
+                    <input type="submit" value="Update Task" class="btn btn-danger" >
+                </div>
+            </form>
+        {% endfor %}
+    </div><!--from end-->
+</div>
+
+{% endblock 'main' %}
+{% include 'todoapp/footer.html' %}
